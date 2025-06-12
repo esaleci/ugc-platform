@@ -1,0 +1,426 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Bell,
+  Calendar,
+  DollarSign,
+  MessageSquare,
+  TrendingUp,
+  CheckCircle,
+  AlertCircle,
+  Trash2,
+  Star,
+} from "lucide-react"
+
+export function CreatorNotifications() {
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      type: "campaign",
+      title: "New Campaign Invitation",
+      message: "TechCorp has invited you to join their 'Summer Tech Review' campaign. Reward: $500",
+      time: "1 hour ago",
+      read: false,
+      icon: Calendar,
+      priority: "high",
+    },
+    {
+      id: 2,
+      type: "payment",
+      title: "Payment Received",
+      message: "You've received $350 for completing the 'Fashion Forward' campaign.",
+      time: "3 hours ago",
+      read: false,
+      icon: DollarSign,
+      priority: "medium",
+    },
+    {
+      id: 3,
+      type: "message",
+      title: "New Message from Brand",
+      message: "StyleCo has sent you a message regarding your recent submission.",
+      time: "5 hours ago",
+      read: true,
+      icon: MessageSquare,
+      priority: "medium",
+    },
+    {
+      id: 4,
+      type: "performance",
+      title: "Content Performance Update",
+      message: "Your recent post for 'Fitness Goals' campaign has reached 10K views!",
+      time: "1 day ago",
+      read: true,
+      icon: TrendingUp,
+      priority: "low",
+    },
+    {
+      id: 5,
+      type: "campaign",
+      title: "Campaign Deadline Reminder",
+      message: "Don't forget! Your 'Winter Fashion' campaign content is due in 2 days.",
+      time: "2 days ago",
+      read: false,
+      icon: AlertCircle,
+      priority: "high",
+    },
+    {
+      id: 6,
+      type: "achievement",
+      title: "Tier Upgrade!",
+      message: "Congratulations! You've been upgraded to Gold tier. Enjoy your new benefits!",
+      time: "3 days ago",
+      read: true,
+      icon: Star,
+      priority: "high",
+    },
+  ])
+
+  const markAsRead = (id: number) => {
+    setNotifications((prev) => prev.map((notif) => (notif.id === id ? { ...notif, read: true } : notif)))
+  }
+
+  const deleteNotification = (id: number) => {
+    setNotifications((prev) => prev.filter((notif) => notif.id !== id))
+  }
+
+  const markAllAsRead = () => {
+    setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })))
+  }
+
+  const unreadCount = notifications.filter((n) => !n.read).length
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "destructive"
+      case "medium":
+        return "default"
+      case "low":
+        return "secondary"
+      default:
+        return "default"
+    }
+  }
+
+  const getPriorityBorderColor = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "border-t-red-500"
+      case "medium":
+        return "border-t-orange-500"
+      case "low":
+        return "border-t-green-500"
+      default:
+        return "border-t-gray-500"
+    }
+  }
+
+  const getPriorityLabel = (priority: string) => {
+    switch (priority) {
+      case "high":
+        return "URGENT"
+      case "medium":
+        return "MODERATE PRIORITY"
+      case "low":
+        return "LOW PRIORITY"
+      default:
+        return priority.toUpperCase()
+    }
+  }
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case "campaign":
+        return Calendar
+      case "payment":
+        return DollarSign
+      case "message":
+        return MessageSquare
+      case "performance":
+        return TrendingUp
+      case "achievement":
+        return Star
+      default:
+        return Bell
+    }
+  }
+
+  return (
+    <div className="flex-1 space-y-4 p-4 pt-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">Notifications</h2>
+          <p className="text-muted-foreground">
+            Stay updated with campaigns, payments, and performance
+            {unreadCount > 0 && (
+              <Badge variant="destructive" className="ml-2">
+                {unreadCount} unread
+              </Badge>
+            )}
+          </p>
+        </div>
+        {unreadCount > 0 && (
+          <Button onClick={markAllAsRead} variant="outline">
+            Mark All as Read
+          </Button>
+        )}
+      </div>
+
+      <Tabs defaultValue="all" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="all">All ({notifications.length})</TabsTrigger>
+          <TabsTrigger value="unread">Unread ({unreadCount})</TabsTrigger>
+          <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
+          <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="messages">Messages</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="all" className="space-y-4">
+          <div className="space-y-2">
+            {notifications.map((notification) => {
+              const IconComponent = getTypeIcon(notification.type)
+              return (
+                <Card
+                  key={notification.id}
+                  className={`transition-all hover:shadow-md ${!notification.read ? `border-t-4 ${getPriorityBorderColor(notification.priority)} bg-white/5` : ""}`}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start space-x-3">
+                        <div className={`p-2 rounded-full ${!notification.read ? "bg-white/10" : "bg-white/5"}`}>
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2">
+                            <h4 className={`font-medium ${!notification.read ? "font-semibold" : ""}`}>
+                              {notification.title}
+                            </h4>
+                            <Badge variant={getPriorityColor(notification.priority)} className="text-xs">
+                              {notification.priority}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
+                          <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        {!notification.read && (
+                          <Button variant="ghost" size="sm" onClick={() => markAsRead(notification.id)}>
+                            <CheckCircle className="w-4 h-4" />
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="sm" onClick={() => deleteNotification(notification.id)}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="unread" className="space-y-4">
+          <div className="space-y-2">
+            {notifications
+              .filter((n) => !n.read)
+              .map((notification) => {
+                const IconComponent = getTypeIcon(notification.type)
+                return (
+                  <Card
+                    key={notification.id}
+                    className={`border-t-4 ${getPriorityBorderColor(notification.priority)} bg-white/5`}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <div className="p-2 rounded-full bg-white/10">
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <h4 className="font-semibold">{notification.title}</h4>
+                              <Badge variant={getPriorityColor(notification.priority)} className="text-xs">
+                                {notification.priority}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Button variant="ghost" size="sm" onClick={() => markAsRead(notification.id)}>
+                            <CheckCircle className="w-4 h-4" />
+                          </Button>
+                          <Button variant="ghost" size="sm" onClick={() => deleteNotification(notification.id)}>
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="campaigns" className="space-y-4">
+          <div className="space-y-2">
+            {notifications
+              .filter((n) => n.type === "campaign")
+              .map((notification) => {
+                const IconComponent = getTypeIcon(notification.type)
+                return (
+                  <Card
+                    key={notification.id}
+                    className={
+                      !notification.read ? `border-t-4 ${getPriorityBorderColor(notification.priority)} bg-white/5` : ""
+                    }
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <div className={`p-2 rounded-full ${!notification.read ? "bg-white/10" : "bg-white/5"}`}>
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <h4 className={`font-medium ${!notification.read ? "font-semibold" : ""}`}>
+                                {notification.title}
+                              </h4>
+                              <Badge variant={getPriorityColor(notification.priority)} className="text-xs">
+                                {notification.priority}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {!notification.read && (
+                            <Button variant="ghost" size="sm" onClick={() => markAsRead(notification.id)}>
+                              <CheckCircle className="w-4 h-4" />
+                            </Button>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => deleteNotification(notification.id)}>
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="payments" className="space-y-4">
+          <div className="space-y-2">
+            {notifications
+              .filter((n) => n.type === "payment")
+              .map((notification) => {
+                const IconComponent = getTypeIcon(notification.type)
+                return (
+                  <Card
+                    key={notification.id}
+                    className={
+                      !notification.read ? `border-t-4 ${getPriorityBorderColor(notification.priority)} bg-white/5` : ""
+                    }
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <div className={`p-2 rounded-full ${!notification.read ? "bg-white/10" : "bg-white/5"}`}>
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <h4 className={`font-medium ${!notification.read ? "font-semibold" : ""}`}>
+                                {notification.title}
+                              </h4>
+                              <Badge variant={getPriorityColor(notification.priority)} className="text-xs">
+                                {notification.priority}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {!notification.read && (
+                            <Button variant="ghost" size="sm" onClick={() => markAsRead(notification.id)}>
+                              <CheckCircle className="w-4 h-4" />
+                            </Button>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => deleteNotification(notification.id)}>
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="messages" className="space-y-4">
+          <div className="space-y-2">
+            {notifications
+              .filter((n) => n.type === "message")
+              .map((notification) => {
+                const IconComponent = getTypeIcon(notification.type)
+                return (
+                  <Card
+                    key={notification.id}
+                    className={
+                      !notification.read ? `border-t-4 ${getPriorityBorderColor(notification.priority)} bg-white/5` : ""
+                    }
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start space-x-3">
+                          <div className={`p-2 rounded-full ${!notification.read ? "bg-white/10" : "bg-white/5"}`}>
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <h4 className={`font-medium ${!notification.read ? "font-semibold" : ""}`}>
+                                {notification.title}
+                              </h4>
+                              <Badge variant={getPriorityColor(notification.priority)} className="text-xs">
+                                {notification.priority}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
+                            <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {!notification.read && (
+                            <Button variant="ghost" size="sm" onClick={() => markAsRead(notification.id)}>
+                              <CheckCircle className="w-4 h-4" />
+                            </Button>
+                          )}
+                          <Button variant="ghost" size="sm" onClick={() => deleteNotification(notification.id)}>
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}
