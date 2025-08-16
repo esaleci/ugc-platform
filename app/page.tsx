@@ -331,7 +331,7 @@ interface UserTypeSelectionProps {
 
 function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
   return (
-    <div className="min-h-screen relative overflow-hidden bg-background">
+    <div className="min-h-screen relative overflow-x-hidden bg-background ">
       <AnimatedGradientBackground 
         Breathing={true}
         gradientColors={["#0A0A0A", "#1a1a2e", "#16213e", "#0f3460"]}
@@ -472,7 +472,7 @@ function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
             </div>
           </div>
           <div className="relative">
-            <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
+            <div className="aspect-video rounded-lg overflow-x-hidden shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop"
                 alt="Platform Preview"
@@ -488,6 +488,7 @@ function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
         </motion.div>
       </div>
                 </div>
+
   );
 }
 
@@ -608,7 +609,7 @@ function ProductIntro({ userType, onContinue, onBack }: ProductIntroProps) {
     : 'All the tools you need to monetize your creativity';
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-background">
+    <div className="min-h-screen relative overflow-x-hidden bg-background">
             <AnimatedGradientBackground 
         Breathing={true}
         gradientColors={userType === 'brand' 
@@ -667,14 +668,14 @@ function ProductIntro({ userType, onContinue, onBack }: ProductIntroProps) {
 <div className="flex justify-center">
           <HoverButton
               onClick={onContinue}
-              glowColor={userType === 'brand' ? '#a855f7' : '#3b82f6'}
+              glowColor={userType === 'brand' ? ' #a855f7 ' : '#3b82f6'}
               backgroundColor={userType === 'brand' ? 'rgba(168, 85, 247, 0.1)' : 'rgba(59, 130, 246, 0.1)'}
               textColor={userType === 'brand' ? '#c4b5fd' : '#93c5fd'}
               hoverTextColor="#ffffff"
-              className="text-lg px-12 py-4"
+              className="text-lg px-12 py-4 "
             >
               Continue to Dashboard
-              <ArrowRight className="inline ml-2 w-5 h-5" />
+              <ArrowRight className="inline ml-2 w-5 h-5 " />
             </HoverButton>
             </div>
                     <WhyChooseUs />
@@ -726,13 +727,13 @@ function UGCCreatorPlatform() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <AnimatePresence mode="wait">
         {currentStep === 'selection' && (
           <motion.div
             key="selection"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 ,contain: "strict" }}
+            animate={{ opacity: 1 ,contain: "content"}}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.5 }}
           >
@@ -774,6 +775,7 @@ function UGCCreatorPlatform() {
           </motion.div>
         )}
       </AnimatePresence>
+      
     </div>
   );
 }

@@ -232,8 +232,8 @@ export function CreatorPerformance() {
   ]
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div>
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
+      <div className="flex gap-3 flex-col flex-wrap ">
         <h2 className="text-3xl font-bold tracking-tight">Performance</h2>
         <p className="text-muted-foreground">Track your content performance and audience insights</p>
       </div>
@@ -337,7 +337,7 @@ export function CreatorPerformance() {
       </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList>
+      <TabsList className="flex gap-2 flex-wrap h-auto py-3 lg:py-1 lg:h-content">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="content">Content Performance</TabsTrigger>
           <TabsTrigger value="audience">Audience Insights</TabsTrigger>
@@ -345,7 +345,7 @@ export function CreatorPerformance() {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2">
             {/* Monthly Performance */}
             <Card>
               <CardHeader>
@@ -355,7 +355,7 @@ export function CreatorPerformance() {
               <CardContent>
                 <div className="space-y-4">
                   {monthlyPerformance.map((month) => (
-                    <div key={month.month} className="space-y-2">
+                    <div key={month.month} className="space-y-2 flex gap-3 flex-wrap">
                       <div className="flex items-center justify-between text-sm">
                         <span className="font-medium">{month.month}</span>
                         <span className="text-lime-300">+{month.growth}%</span>
@@ -387,9 +387,9 @@ export function CreatorPerformance() {
                 <CardDescription>Average engagement per content type</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-              <div className="flex flex-row gap-12 items-center justify-center max-w-full w-content">
+              <div className="flex flex-row  items-center justify-center max-w-full w-content flex-wrap gap-5 lg:gap-12">
                 {engagementMetrics.map((platform) => (
-                  <div key={platform.platform} className="relative flex flex-row flex-wrap gap-8 items-center w-96  bg-slate-950 rounded-lg px-2 py-2">
+                  <div key={platform.platform} className="relative flex flex-row flex-wrap gap-2 lg:gap-8 items-center w-full lg:w-96  bg-slate-950 rounded-lg px-2 py-2">
                     
                        <div className={`${platform.color} w-full h-full rounded-lg text-center shadow-lg`}>
                        {/* <div className="absolute top-0 left-0 w-full h-full bg-slate-950 rounded-lg"></div> */}
@@ -404,7 +404,7 @@ export function CreatorPerformance() {
                       
                       <div className="bg-card w-full h-full rounded-lg p-1">
                     
-                     <div className="bg-card w-full h-full rounded-lg p-5 border border-stone-100 border-dashed flex flex-row flex-wrap gap-5 items-center justify-center text-left">
+                     <div className="bg-card w-full h-full rounded-lg p-5 border border-stone-100 border-dashed grid grid-cols-2  lg:flex lg:flex-row   flex-wrap gap-5 items-center justify-center text-left">
 
                       <div className="flex flex-row gap-2 items-center">
                       <Heart className="h-4 w-4 text-pink-500" />

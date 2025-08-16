@@ -165,7 +165,7 @@ export function CreatorLeaderboard() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Leaderboard</h2>
         <p className="text-muted-foreground">See how you rank among other creators</p>
@@ -180,7 +180,8 @@ export function CreatorLeaderboard() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center space-x-4 ">
+            <div className="flex gap-4">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
               <span className="text-xl font-bold text-primary">#{myPosition.rank}</span>
             </div>
@@ -188,6 +189,7 @@ export function CreatorLeaderboard() {
               <AvatarImage src={myPosition.avatar || "/placeholder.svg"} />
               <AvatarFallback>AD</AvatarFallback>
             </Avatar>
+            </div>
             <div className="flex-1">
               <div className="font-semibold">{myPosition.name}</div>
               <div className="text-sm text-muted-foreground">{myPosition.followers.toLocaleString()} followers</div>
@@ -209,7 +211,7 @@ export function CreatorLeaderboard() {
       </Card>
 
       <Tabs defaultValue="earnings" className="space-y-6">
-        <TabsList>
+      <TabsList className="flex gap-2 flex-wrap h-auto py-3 lg:py-1 lg:h-content">
           <TabsTrigger value="earnings">Top Earners</TabsTrigger>
           <TabsTrigger value="engagement">Top Engagement</TabsTrigger>
           <TabsTrigger value="growth">Fastest Growing</TabsTrigger>
@@ -270,7 +272,7 @@ export function CreatorLeaderboard() {
             <CardContent>
               <div className="space-y-4">
                 {topEarners.map((creator) => (
-                  <div key={creator.id} className="flex items-center space-x-4 p-4 rounded-lg border">
+                  <div key={creator.id} className="flex items-center space-x-4 p-4 rounded-lg border flex-wrap gap-3">
                     <div className="flex items-center justify-center w-8 h-8">{getRankIcon(creator.rank)}</div>
                     <Avatar>
                       <AvatarImage src={creator.avatar || "/placeholder.svg"} />

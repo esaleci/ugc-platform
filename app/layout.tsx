@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
               // ABSOLUTE NUCLEAR OPTION - COMPLETELY DISABLE RESIZEOBSERVER
@@ -171,15 +171,15 @@ export default function RootLayout({
               })();
             `,
           }}
-        />
+        /> */}
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
-        <div className="flex h-screen">
-          {/* Sidebar */}
+        <div className="flex w-full ">
+          {/* Sidebar h-screen*/}
          
           {/* Main Content */}
           <main className="flex-1 overflow-y-auto ">
-            <div id="app-root" style={{ minHeight: "100vh", contain: "strict", isolation: "isolate" }}>
+            <div id="app-root" style={{ minHeight: "100vh", isolation: "isolate" }}>
               {children}
             </div>
           </main>

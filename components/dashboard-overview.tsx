@@ -35,7 +35,7 @@ function CreatorAvatars({ creators, totalCount }: { creators: string[]; totalCou
   }
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 flex-wrap gap-2">
       <div className="flex -space-x-2">
         {displayCreators.map((avatar, index) => (
           <img
@@ -399,10 +399,10 @@ export function DashboardOverview() {
         ))}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-4 lg:grid-cols-6">
+      <div className="grid gap-6 lg:grid-cols-4 xl:grid-cols-6">
         {/* Active Campaigns */}
         <Card className="col-span-2">
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-2">
             <div>
               <CardTitle className="text-pink-300">Active Campaigns</CardTitle>
               <CardDescription>Monitor your running campaigns</CardDescription>
@@ -414,7 +414,7 @@ export function DashboardOverview() {
           </CardHeader>
           <CardContent className="space-y-4">
             {activeCampaigns.map((campaign) => (
-              <div key={campaign.id} className="flex items-center space-x-4 rounded-lg border p-4">
+              <div key={campaign.id} className="flex items-center space-x-4 rounded-lg border p-4 ">
                 <div className="h-12 w-12 rounded-lg bg-muted overflow-hidden">
                   <img
                     src={campaign.image || "/placeholder.svg"}
@@ -423,9 +423,10 @@ export function DashboardOverview() {
                   />
                 </div>
                 <div className="flex-1 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium leading-none">{campaign.title}</p>
+                  <div className="flex items-start md:items-center justify-end md:justify-between flex-col md:flex-row gap-2">
+                    <p className="text-sm font-medium leading-none order-2 md:order-1">{campaign.title}</p>
                     <Badge
+                      className="order-1 md:order-2 "
                       variant={
                         campaign.status === "Active"
                           ? "default"
@@ -438,7 +439,7 @@ export function DashboardOverview() {
                     </Badge>
                   </div>
                   <p className="text-sm text-muted-foreground">{campaign.type}</p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
                     <span className="text-xs text-muted-foreground">{campaign.submissions} submissions</span>
                     <CreatorAvatars creators={campaign.creatorAvatars} totalCount={campaign.creators} />
                   </div>
@@ -450,13 +451,13 @@ export function DashboardOverview() {
 
         {/* Pending Review */}
         <Card className="col-span-2">
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-row items-center justify-between gap-3 flex-wrap w-full">
             <div>
               <CardTitle>Pending Review</CardTitle>
               <CardDescription>Content awaiting approval</CardDescription>
             </div>
-            <Button variant="ghost" size="sm">
-              View All Pending
+            <Button className="flex self-end" variant="ghost" size="sm">
+             <span className="text-xs "> View All Pending</span>
               <ArrowUpRight className="ml-2 h-4 w-4" />
             </Button>
           </CardHeader>
@@ -473,8 +474,8 @@ export function DashboardOverview() {
                     <p className="text-xs text-muted-foreground">{review.creator.campaign}</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs text-muted-foreground">{review.timeAgo}</span>
+                <div className="flex flex-col gap-1 md:flex-row items-end md:items-center space-x-2  w-full ">
+                  <span className="text-xs text-muted-foreground ">{review.timeAgo}</span>
                   <div className="flex space-x-1">
                     <Button size="sm" variant="outline" className="h-6 w-6 p-0">
                       <CheckCircle className="h-3 w-3 text-lime-300" />
@@ -558,7 +559,7 @@ export function DashboardOverview() {
 
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Campaign Performance */}
         <Card>
           <CardHeader>

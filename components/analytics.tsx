@@ -32,7 +32,7 @@ export function Analytics() {
   ]
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Analytics</h2>
         <p className="text-muted-foreground">Comprehensive insights into your UGC campaigns and creator performance</p>
@@ -163,7 +163,7 @@ export function Analytics() {
       </div>
 
       <Tabs defaultValue="campaigns" className="space-y-6">
-        <TabsList>
+        <TabsList className="flex gap-2 flex-wrap h-auto py-3 lg:py-1 lg:h-content">
           <TabsTrigger value="campaigns">Campaign Performance</TabsTrigger>
           <TabsTrigger value="engagement">Engagement Metrics</TabsTrigger>
           <TabsTrigger value="creators">Creator Analytics</TabsTrigger>
@@ -219,12 +219,12 @@ export function Analytics() {
 
         <TabsContent value="engagement" className="space-y-6">
           <Card>
-            <CardHeader>
+            <CardHeader className="p-2 pt-6 xl:p-6">
               <CardTitle>Platform Engagement Breakdown</CardTitle>
               <CardDescription>Engagement metrics across different platforms</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-row gap-12 items-center justify-center max-w-full w-content">
+            <CardContent className="p-2 pt-6 xl:p-6">
+              <div className="flex flex-row gap-12 items-center justify-center max-w-full w-content flex-col 2xl:flex-row">
                 {engagementMetrics.map((platform) => (
                   <div key={platform.platform} className="relative flex flex-row flex-wrap gap-8 items-center w-96  bg-slate-950 rounded-lg px-2 py-2">
                     
@@ -293,7 +293,8 @@ export function Analytics() {
 
             
             {/* chart social media */}
-            <div className="grid grid-cols-3 items-center justify-center w-full  mt-10">
+           
+            <div className="grid  2xl:grid-cols-3 items-center justify-center w-full  mt-10">
               <div className="flex flex-col gap-2 h-[300px] w-full items-center justify-center "> 
               <h4 className="text-lg font-bold text-gray-400">Social Media Likes Breakdown</h4>
             <PieCharts data={engagementMetrics} value="likes" colors={engagementMetrics.map((platform) => platform.color)} />
@@ -310,6 +311,7 @@ export function Analytics() {
             <PieCharts data={engagementMetrics} value="view" colors={engagementMetrics.map((platform) => platform.color)} />
             </div>
             </div>
+           
             </CardContent>
           </Card>
         </TabsContent>

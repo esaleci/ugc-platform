@@ -67,9 +67,9 @@ export function InviteCreator({ onBack, onSave }: InviteCreatorProps) {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center space-x-4 ">
           <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
@@ -86,7 +86,7 @@ export function InviteCreator({ onBack, onSave }: InviteCreatorProps) {
       </div>
 
       <Tabs value={currentStep} onValueChange={setCurrentStep} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="flex gap-2 flex-wrap h-auto py-3 md:py-1 lg:h-content">
           <TabsTrigger value="basic" className="flex items-center space-x-2">
             <UserPlus className="w-4 h-4" />
             <span>Basic Info</span>
