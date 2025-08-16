@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
-import { Plus, Search, Filter, MoreHorizontal, Users, FileText, BarChart3, Calendar, Bookmark, User } from "lucide-react"
+import { Plus, Search, Filter, MoreHorizontal, Users, FileText, BarChart3, Calendar, Bookmark, User, DollarSign } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { CreateCampaign } from "@/components/create-campaign"
 import { InviteCreators } from "@/components/invite-creators"
@@ -325,16 +325,135 @@ export function CampaignManagement() {
     )
   }
 
+  const CampaignCard = ({ campaign, onInviteCreators }:{campaign:any,onInviteCreators:any}) => (
+    <div className="bg-white/2 border border-gray-700 rounded-lg shadow-sm p-4 space-y-4">
+      {/* Header with image, name, and actions */}
+      <div className="flex items-start justify-between">
+        <div className="flex items-center space-x-3 flex-1">
+          <div className="h-12 w-12 rounded-lg overflow-hidden flex-shrink-0">
+            <img
+              src={campaign.image}
+              alt={campaign.name}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-medium text-gray-200 truncate">{campaign.name}</h3>
+            <div className="flex items-center text-xs text-gray-500 mt-1">
+              <Calendar className="h-3 w-3 mr-1" />
+              {campaign.startDate} - {campaign.endDate}
+            </div>
+          </div>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuItem>Edit Campaign</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onInviteCreators(campaign.name)}>
+              Invite Creators
+            </DropdownMenuItem>
+            <DropdownMenuItem>Duplicate</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-600">Delete Campaign</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+  
+      {/* Status Badge */}
+      <div className="flex items-center">
+        <Badge
+          variant={
+            campaign.status === "Active"
+              ? "default"
+              : campaign.status === "Draft"
+                ? "secondary"
+                : campaign.status === "Completed"
+                  ? "outline"
+                  : "secondary"
+          }
+        >
+          {campaign.status}
+        </Badge>
+      </div>
+  
+      {/* Metrics Grid */}
+      <div className="grid grid-cols-2 gap-4">
+        {/* Creators */}
+        <div className="flex items-center space-x-2">
+          <Users className="h-4 w-4 text-gray-400" />
+          <div>
+            <div className="text-sm font-medium text-gray-200">{campaign.creators}</div>
+            <div className="text-xs text-gray-500">Creators</div>
+          </div>
+        </div>
+  
+        {/* Submissions */}
+        <div className="flex items-center space-x-2">
+          <FileText className="h-4 w-4 text-gray-400" />
+          <div>
+            <div className="text-sm font-medium text-gray-200">{campaign.submissions}</div>
+            <div className="text-xs text-gray-500">Submissions</div>
+          </div>
+        </div>
+  
+        {/* Budget */}
+        <div className="flex items-center space-x-2">
+          <DollarSign className="h-4 w-4 text-gray-400" />
+          <div>
+            <div className="text-sm font-medium text-gray-200">
+              ${campaign.spent.toLocaleString()}
+            </div>
+            <div className="text-xs text-gray-500">
+              of ${campaign.budget.toLocaleString()}
+            </div>
+          </div>
+        </div>
+  
+        {/* ROI */}
+        <div className="flex items-center space-x-2">
+          <TrendingUp className="h-4 w-4 text-gray-400" />
+          <div>
+            <div className={`text-sm font-medium ${campaign.roi > 0 ? "text-green-600" : "text-gray-500"}`}>
+              {campaign.roi > 0 ? `${campaign.roi}%` : "-"}
+            </div>
+            <div className="text-xs text-gray-500">ROI</div>
+          </div>
+        </div>
+      </div>
+  
+      {/* Budget Progress */}
+      <div className="space-y-2">
+        <div className="flex justify-between text-xs text-gray-500">
+          <span>Budget Usage</span>
+          <span>{Math.round((campaign.spent / campaign.budget) * 100)}%</span>
+        </div>
+        <Progress value={(campaign.spent / campaign.budget) * 100} className="h-2" />
+      </div>
+  
+      {/* Creator Avatars */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <span className="text-xs text-gray-500">Team:</span>
+          <CreatorAvatars count={campaign.creators} maxDisplay={4} />
+        </div>
+      </div>
+    </div>
+  );
+
 
   return (
     <div
       ref={containerRef}
-      className={`flex-1 space-y-6 p-6 min-h-screen transition-all duration-300 ${
+      className={`flex-1 max-w-full space-y-6 p-0 lg:p-6 min-h-screen transition-all duration-300 overflow-x-hidden ${
         isTransitioning ? "opacity-50 pointer-events-none" : "opacity-100"
       }`}
       style={{ contain: "content" }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Campaign Management</h2>
           <p className="text-muted-foreground">Create, monitor, and manage your UGC campaigns</p>
@@ -351,7 +470,7 @@ export function CampaignManagement() {
       {/* Stats Cards */}
      
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
         <Card className="relative h-[150px]  drop-shadow-xl  overflow-hidden rounded-xl ">
         <div
     className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 "
@@ -360,7 +479,7 @@ export function CampaignManagement() {
             <CardTitle className="text-sm font-medium">Total Campaigns</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row gap-2 items-center ">
               <div className="flex-1 gap-2 flex-col">
             <div className="text-2xl font-bold">{campaigns.length}</div>
             <p className="text-xs text-muted-foreground">
@@ -493,7 +612,7 @@ export function CampaignManagement() {
       </div>
 
       {/* Campaign Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
         {filteredCampaigns.slice(0, 3).map((campaign) => (
           <Card key={campaign.id} className="overflow-hidden">
             <div className="h-40 overflow-hidden">
@@ -564,12 +683,27 @@ export function CampaignManagement() {
       </div>
 
       {/* Campaigns Table */}
-      <Card>
-        <CardHeader>
+
+      <Card className="border-none bg-transparent xl:border xl:bg-card text-card-foreground">
+        <CardHeader className="px-0 xl:p-6">
           <CardTitle>All Campaigns</CardTitle>
           <CardDescription>A list of all your campaigns and their current status</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 xl:p-6">
+        {/* <CardContent className="p-0"> */}
+            {/* Mobile Card View */}
+            <div className="block xl:hidden  space-y-4">
+              {filteredCampaigns.map((campaign) => (
+                <CampaignCard 
+                  key={campaign.id} 
+                  campaign={campaign} 
+                  onInviteCreators={handleInviteCreators}
+                />
+              ))}
+            </div>
+
+ {/* Desktop Table View */}
+            <div className="hidden xl:block">
           <Table>
             <TableHeader>
               <TableRow>
@@ -656,6 +790,7 @@ export function CampaignManagement() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

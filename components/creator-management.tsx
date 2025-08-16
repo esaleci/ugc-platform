@@ -123,6 +123,15 @@ export function CreatorManagement() {
     )
   }
 
+  // <TableHead>Creator</TableHead>
+  // <TableHead>Tier</TableHead>
+  // <TableHead>Followers</TableHead>
+  // <TableHead>Earnings</TableHead>
+  // <TableHead>Engagement</TableHead>
+  // <TableHead>Posts</TableHead>
+  // <TableHead>Status</TableHead>
+ 
+
   return (
     <div className={`flex-1 space-y-6 p-6  min-h-screen transition-all duration-300 ${
         isTransitioning ? "opacity-50 pointer-events-none" : "opacity-100"
@@ -230,12 +239,94 @@ export function CreatorManagement() {
       </div>
 
       {/* Creators Table */}
-      <Card>
-        <CardHeader>
+      <Card className="border-none bg-transparent xl:border xl:bg-card text-card-foreground">
+        <CardHeader className="px-0 xl:p-6">
           <CardTitle>All Creators</CardTitle>
           <CardDescription>Manage your creator network and track their performance</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 xl:p-6">
+          
+             {/* Mobile Card View */}
+      <div className="block xl:hidden space-y-4">
+        {filteredCreators.map((creator) => (
+          <div 
+            key={creator.id} 
+            className="bg-white/10 dark:bg-gray-900 rounded-xl shadow-lg border border-gray-700 dark:border-gray-700 p-6 hover:shadow-xl transition-shadow duration-200"
+          >
+            {/* Header with Avatar and Action */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center space-x-4">
+                <Avatar>
+                  <AvatarImage src={creator.avatar || "/placeholder.svg"} />
+                  <AvatarFallback>
+                    {creator.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h3 className="font-semibold text-lg text-gray-200 dark:text-white">{creator.name}</h3>
+                  <p className="text-sm text-gray-400 dark:text-gray-400">{creator.username}</p>
+                </div>
+              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="h-8 w-8 p-0 text-gray-400 dark:text-gray-400">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <Eye className="h-4 w-4 mr-2" />
+                    View Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    Send Message
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    View Analytics
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-pink-500 dark:text-pink-400">
+                    <Trash className="h-4 w-4 mr-2 text-pink-500 dark:text-pink-400" />
+                    Remove Creator
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            {/* Tier and Status */}
+            <div className="flex items-center justify-between mb-4">
+              <Badge className={getTierColor(creator.tier)}>{creator.tier}</Badge>
+              <Badge variant={creator.status === "Active" ? "default" : "secondary"}>{creator.status}</Badge>
+            </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gray-900 dark:bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 dark:text-gray-400 uppercase tracking-wide">Followers</p>
+                <p className="text-lg font-semibold text-gray-200 dark:text-white">{creator.followers.toLocaleString()}</p>
+              </div>
+              <div className="bg-gray-900 dark:bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 dark:text-gray-400 uppercase tracking-wide">Earnings</p>
+                <p className="text-lg font-semibold text-green-600 dark:text-green-400">${creator.earnings.toLocaleString()}</p>
+              </div>
+              <div className="bg-gray-900 dark:bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 dark:text-gray-400 uppercase tracking-wide">Engagement</p>
+                <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">{creator.engagement}%</p>
+              </div>
+              <div className="bg-gray-900 dark:bg-gray-800 rounded-lg p-3">
+                <p className="text-xs text-gray-400 dark:text-gray-400 uppercase tracking-wide">Posts</p>
+                <p className="text-lg font-semibold text-gray-200 dark:text-white">{creator.posts}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+            <div className="hidden xl:block">
           <Table>
             <TableHeader>
               <TableRow>
@@ -310,6 +401,7 @@ export function CreatorManagement() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

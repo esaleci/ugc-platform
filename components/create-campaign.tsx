@@ -99,14 +99,14 @@ export function CreateCampaign({ onBack, onSave }: CreateCampaignProps) {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+    <div className="flex-1 space-y-6 p-0 md:p-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center space-x-4 flex-wrap  gap-2">
           <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <div>
+          <div >
             <h2 className="text-3xl font-bold tracking-tight">Create Campaign</h2>
             <p className="text-muted-foreground">Set up your new UGC campaign</p>
           </div>

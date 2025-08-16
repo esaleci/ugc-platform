@@ -173,8 +173,8 @@ export function CreatorEarnings() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Earnings</h2>
           <p className="text-muted-foreground">Track your earnings and payment history</p>
@@ -277,7 +277,7 @@ export function CreatorEarnings() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
         {/* Tier Progress */}
-        <Card className="col-span-3">
+        <Card className="col-span-4 lg:col-span-3">
           <CardHeader>
             <CardTitle>Tier Progress</CardTitle>
             <CardDescription>Your journey to the next tier</CardDescription>
@@ -345,7 +345,7 @@ export function CreatorEarnings() {
       </div>
 
       <Tabs defaultValue="history" className="space-y-6">
-        <TabsList>
+      <TabsList className="flex gap-2 flex-wrap h-auto py-3 lg:py-1 lg:h-content">
           <TabsTrigger value="history">Payment History</TabsTrigger>
           <TabsTrigger value="pending">Pending Payments</TabsTrigger>
           <TabsTrigger value="methods">Payment Methods</TabsTrigger>
@@ -360,7 +360,7 @@ export function CreatorEarnings() {
             <CardContent>
               <div className="space-y-4">
                 {earningsHistory.map((payment) => (
-                  <div key={payment.id} className="flex items-center justify-between p-4 rounded-lg border">
+                  <div key={payment.id} className="flex items-center justify-between p-4 rounded-lg border flex-col md:flex-row gap-3">
                     <div className="flex items-center space-x-4">
                       {getStatusIcon(payment.status)}
                       <div>
@@ -400,7 +400,7 @@ export function CreatorEarnings() {
                 {earningsHistory
                   .filter((payment) => payment.status === "Pending" || payment.status === "Processing")
                   .map((payment) => (
-                    <div key={payment.id} className="flex items-center justify-between p-4 rounded-lg border">
+                    <div key={payment.id} className="flex items-center justify-between p-4 rounded-lg border flex-col md:flex-row gap-3">
                       <div className="flex items-center space-x-4">
                         {getStatusIcon(payment.status)}
                         <div>

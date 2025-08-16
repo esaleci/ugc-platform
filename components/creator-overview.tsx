@@ -187,7 +187,7 @@ export function CreatorOverview() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-6 p-0 md:p-6">
       {/* Stats Overview */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
@@ -291,8 +291,8 @@ export function CreatorOverview() {
         </Card>
 
         {/* Recent Submissions */}
-        <Card className="col-span-3">
-          <CardHeader className="flex flex-row items-center justify-between">
+        <Card className="col-span-4 lg:col-span-3 ">
+          <CardHeader className="flex flex-row items-center justify-between flex-wrap gap-3 max-w-screen">
             <div>
               <CardTitle>Recent Submissions</CardTitle>
               <CardDescription>Your latest content submissions</CardDescription>
@@ -342,7 +342,7 @@ export function CreatorOverview() {
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Tier Progress */}
         <Card>
           <CardHeader>

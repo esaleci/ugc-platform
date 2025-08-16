@@ -89,8 +89,8 @@ export function ContentUpload({ onBack, onSave }: ContentUploadProps) {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" onClick={onBack}>
             <ArrowLeft className="w-4 h-4 mr-2" />

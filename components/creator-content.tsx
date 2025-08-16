@@ -140,8 +140,8 @@ export function CreatorContent() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
-      <div className="flex items-center justify-between">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Content Management</h2>
           <p className="text-muted-foreground">Upload and manage your content</p>
@@ -223,8 +223,8 @@ export function CreatorContent() {
       </div>
 
       <Tabs defaultValue="all" className="space-y-6">
-        <div className="flex items-center justify-between">
-          <TabsList>
+        <div className="flex items-center justify-between flex-wrap gap-3">
+        <TabsList className="flex gap-2 flex-wrap h-auto py-3 lg:py-1 lg:h-content">
             <TabsTrigger value="all">All Content ({myContent.length})</TabsTrigger>
             <TabsTrigger value="approved">
               Approved ({myContent.filter((c) => c.status === "Approved").length})

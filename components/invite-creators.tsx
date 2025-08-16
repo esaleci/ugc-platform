@@ -213,7 +213,7 @@ export function InviteCreators({ onBack, campaignName = "Summer Collection Campa
 
   return (
     <div
-      className={`flex-1 space-y-6 p-6 min-h-screen transition-all duration-500 ${
+      className={`flex-1 space-y-6 p-0 md:p-6 min-h-screen overflow-hidden transition-all duration-500 ${
         isExiting ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
       style={{
@@ -224,13 +224,13 @@ export function InviteCreators({ onBack, campaignName = "Summer Collection Campa
         overflow: isExiting ? "hidden" : "auto",
       }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" onClick={handleBack} disabled={isLoading || isExiting}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <div>
+          <div className="">
             <h2 className="text-3xl font-bold tracking-tight">Invite Creators</h2>
             <p className="text-muted-foreground">
               Invite creators to join "{campaignName}" • {selectedCreators.length} selected
@@ -253,7 +253,7 @@ export function InviteCreators({ onBack, campaignName = "Summer Collection Campa
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="browse" className="space-y-6">
+        <TabsContent value="browse" className="space-y-6 ">
           <Card>
             <CardContent className="p-4">
               <div className="flex flex-col md:flex-row gap-4">
@@ -336,8 +336,8 @@ export function InviteCreators({ onBack, campaignName = "Summer Collection Campa
               </div>
             </CardContent>
           </Card>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* <div className="rounded-md border w-full overflow-auto border border-gray-200 rounded-lg shadow dark:border-gray-800 h-[40%]"> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {filteredCreators.map((creator) => (
               <Card
                 key={creator.id}
@@ -417,6 +417,7 @@ export function InviteCreators({ onBack, campaignName = "Summer Collection Campa
                 </CardContent>
               </Card>
             ))}
+          {/* </div> */}
           </div>
         </TabsContent>
 

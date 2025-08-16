@@ -133,7 +133,7 @@ export function CreatorCampaigns() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-6 p-0 lg:p-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Campaigns</h2>
         <p className="text-muted-foreground">Discover and join campaigns that match your interests</p>
@@ -176,7 +176,7 @@ export function CreatorCampaigns() {
           </div>
 
           {/* Campaign Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {availableCampaigns.map((campaign) => (
               <Card key={campaign.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="h-48 overflow-hidden">

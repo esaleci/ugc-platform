@@ -461,15 +461,15 @@ export function ContentReview() {
     <div className="space-y-6">
 
       <Card className="bg-background border-none shadow-none">
-        <CardHeader>
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
+        <CardHeader className="p-0 lg:p-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 flex-wrap gap-3">
+            <div className="">
               <CardTitle className="text-foreground">Content Review & Management</CardTitle>
-              <CardDescription className="text-muted-foreground">
+              <CardDescription className="text-muted-foreground ">
                 Review, approve, and manage submitted content from creators
               </CardDescription>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 ">
               <Button
                 variant="outline"
                 size="sm"
@@ -506,23 +506,8 @@ export function ContentReview() {
             </div>
           </div>
 
-          {/* Search and basic filters */}
-          {/* <div className="flex items-center space-x-2">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by creator, campaign, caption, or tags..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-8"
-          />
-        </div>
-        <Button variant="outline">
-          <Filter className="mr-2 h-4 w-4" />
-          Filter
-        </Button>
-      </div> */}
-          <div className="flex flex-col md:flex-row gap-4 mt-4">
+        
+          <div className="flex flex-col lg:flex-row gap-4 mt-4 items-start xl:items-center">
           <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -532,7 +517,7 @@ export function ContentReview() {
             className="pl-8"
           />
         </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap mb-5 lg:mb-0 items-center">
               <Select value={filters.status} onValueChange={(value) => setFilters({ ...filters, status: value })}>
                 <SelectTrigger className="w-[180px] bg-input border-border text-foreground">
                   <SelectValue placeholder="Filter by status" />
@@ -564,7 +549,7 @@ export function ContentReview() {
                   />
                 </PopoverContent>
               </Popover>
-              <Button variant="outline" size="sm" onClick={resetFilters} className="border-border">
+              <Button variant="outline" size="sm" onClick={resetFilters} className="border-border my-2">
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Reset
               </Button>
@@ -684,8 +669,8 @@ export function ContentReview() {
             </div>
           )}
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="all" className="space-y-4">
+        <CardContent className="p-0 lg:p-6 ">
+          <Tabs defaultValue="all" className="space-y-4 overflow-hidden">
           {/* <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="browse" disabled={isExiting}>
             Browse Creators
@@ -695,7 +680,7 @@ export function ContentReview() {
           </TabsTrigger>
         </TabsList> */}
         
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-2 xl:grid-cols-5 h-auto lg:h-content max-w-screen py-3 lg:py-1 ">
               <TabsTrigger
                 value="all"
              >
@@ -774,9 +759,9 @@ export function ContentReview() {
                             </div>
 
                             {/* Content Details */}
-                            <div className="flex-1">
-                              <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
-                                <div className="flex items-center gap-2">
+                            <div className="flex-1 ">
+                              <div className="flex flex-col items-start lg:flex-row lg:items-center justify-between mb-2">
+                                <div className="flex items-center gap-2 mb-2  ">
                                   <Avatar className="w-6 h-6">
                                     <AvatarImage src={content.creator.avatar || "/placeholder.svg"} />
                                     <AvatarFallback>
@@ -791,7 +776,7 @@ export function ContentReview() {
                                     {content.creator.tier}
                                   </Badge>
                                 </div>
-                                <div className="flex gap-2 mt-2 md:mt-0">
+                                <div className="flex gap-2 mt-3 md:mt-0">
                                   <Badge variant="outline">{content.type}</Badge>
                                   <Badge
                                     variant={
@@ -861,12 +846,12 @@ export function ContentReview() {
                             </div>
 
                             {/* Actions */}
-                            <div className="flex md:flex-col gap-2 mt-4 md:mt-0">
+                            <div className="flex md:flex-col gap-2 mt-4 md:mt-0 flex-wrap">
                               <Dialog>
                                 <DialogTrigger asChild>
                                   <Button size="sm" variant="outline" className="border-border">
-                                    <Eye className="w-4 h-4 mr-2" />
-                                    View
+                                    <Eye className="w-4 h-4 " />
+                                    <span className="hidden lg:flex ml-2">  View</span>
                                   </Button>
                                 </DialogTrigger>
                                 <DialogContent className="bg-background border-border text-foreground max-w-4xl">
@@ -1058,8 +1043,8 @@ export function ContentReview() {
                                 className="bg-lime-100 hover:bg-lime-300 text-stone-800"
                                 onClick={() => handleContentApproval(content.id, "approve")}
                               >
-                                <CheckCircle className="w-4 h-4 mr-2 " />
-                                Approve
+                                <CheckCircle className="w-4 h-4  " />
+                                <span className="hidden lg:flex ml-2">  Approve</span>
                               </Button>
                               <Button
                                 size="sm"
@@ -1067,8 +1052,8 @@ export function ContentReview() {
                                 className="border-rose-500 text-pink-600 hover:bg-rose-800 hover:text-white"
                                 onClick={() => handleContentApproval(content.id, "reject")}
                               >
-                                <XCircle className="w-4 h-4 mr-2" />
-                                Reject
+                                <XCircle className="w-4 h-4 " />
+                                <span className="hidden lg:flex ml-2">  Reject </span>
                               </Button>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -1100,6 +1085,8 @@ export function ContentReview() {
                         </div>
                       </div>
                     ))
+
+                    
                   )}
                 </div>
               ) : (
@@ -1194,12 +1181,12 @@ export function ContentReview() {
                               {content.status === "Rejected" && "Rejected"}
                             </div>
                           )}
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
                             <Dialog>
                               <DialogTrigger asChild>
                                 <Button size="sm" variant="outline" className="flex-1 border-border">
                                   <Eye className="w-4 h-4 mr-2" />
-                                  View
+                                  <span className="hidden lg:flex ml-2">  View </span>
                                 </Button>
                               </DialogTrigger>
                               <DialogContent className="bg-background border-border text-foreground max-w-4xl">
@@ -1419,6 +1406,8 @@ export function ContentReview() {
                     ))
                   )}
                 </div>
+
+                
               )}
             </TabsContent>
 
@@ -1437,7 +1426,7 @@ export function ContentReview() {
                           />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center justify-between mb-2 flex-col lg:flex-row gap-3">
                             <div className="flex items-center gap-2">
                               <Avatar className="w-6 h-6">
                                 <AvatarImage src={content.creator.avatar || "/placeholder.svg"} />
@@ -1460,14 +1449,14 @@ export function ContentReview() {
                             </div>
                             <p className="text-foreground mt-1">{content.content.caption}</p>
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-wrap">
                             <Button size="sm" className="bg-lime-100 hover:bg-lime-300 text-stone-800">
-                              <CheckCircle className="w-4 h-4 mr-2" />
-                              Approve
+                              <CheckCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">  Approve </span>
                             </Button>
                             <Button size="sm" variant="outline" className="border-rose-500 text-pink-600 hover:bg-rose-800 hover:text-white">
-                              <XCircle className="w-4 h-4 mr-2" />
-                              Reject
+                              <XCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">    Reject </span>
                             </Button>
                           </div>
                         </div>
@@ -1492,8 +1481,8 @@ export function ContentReview() {
                           />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
+                          <div className="flex items-start justify-between mb-2 flex-col lg:flex-row lg:items-center gap-3 ">
+                            <div className="flex items-center gap-2  ">
                               <Avatar className="w-6 h-6">
                                 <AvatarImage src={content.creator.avatar || "/placeholder.svg"} />
                                 <AvatarFallback>
@@ -1517,12 +1506,12 @@ export function ContentReview() {
                           </div>
                           <div className="flex gap-2">
                             <Button size="sm" className="bg-lime-100 hover:bg-lime-300 text-stone-800">
-                              <CheckCircle className="w-4 h-4 mr-2" />
-                              Approve
+                              <CheckCircle className="w-4 h-4" />
+                             <span className="hidden lg:flex ml-2"> Approve</span>
                             </Button>
                             <Button size="sm" variant="outline" className="border-rose-500 text-pink-600 hover:bg-rose-800 hover:text-white">
-                              <XCircle className="w-4 h-4 mr-2" />
-                              Reject
+                              <XCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">  Reject</span>
                             </Button>
                           </div>
                         </div>
@@ -1547,7 +1536,7 @@ export function ContentReview() {
                           />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
+                          <div className="flex  justify-between mb-2 flex-col lg:flex-row gap-3 items-start lg:items-center">
                             <div className="flex items-center gap-2">
                               <Avatar className="w-6 h-6">
                                 <AvatarImage src={content.creator.avatar || "/placeholder.svg"} />
@@ -1570,14 +1559,14 @@ export function ContentReview() {
                             </div>
                             <p className="text-foreground mt-1">{content.content.caption}</p>
                           </div>
-                          <div className="flex gap-2">
+                          <div className="flex gap-2 flex-warp">
                             <Button size="sm" className="bg-lime-100 hover:bg-lime-300 text-stone-800">
-                              <CheckCircle className="w-4 h-4 mr-2" />
-                              Approve
+                              <CheckCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">  Approve</span>
                             </Button>
                             <Button size="sm" variant="outline" className="border-rose-500 text-pink-600 hover:bg-rose-800 hover:text-white">
-                              <XCircle className="w-4 h-4 mr-2" />
-                              Reject
+                              <XCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">   Reject</span>
                             </Button>
                           </div>
                         </div>
@@ -1602,7 +1591,7 @@ export function ContentReview() {
                           />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
+                        <div className="flex  justify-between mb-2 flex-col lg:flex-row gap-3 items-start lg:items-center">
                             <div className="flex items-center gap-2">
                               <Avatar className="w-6 h-6">
                                 <AvatarImage src={content.creator.avatar || "/placeholder.svg"} />
@@ -1627,12 +1616,12 @@ export function ContentReview() {
                           </div>
                           <div className="flex gap-2">
                             <Button size="sm" className="bg-lime-100 hover:bg-lime-300 text-stone-800">
-                              <CheckCircle className="w-4 h-4 mr-2" />
-                              Approve
+                              <CheckCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2"> Approve</span>
                             </Button>
                             <Button size="sm" variant="outline" className="border-rose-500 text-pink-600 hover:bg-rose-800 hover:text-white">
-                              <XCircle className="w-4 h-4 mr-2" />
-                              Reject
+                              <XCircle className="w-4 h-4 " />
+                              <span className="hidden lg:flex ml-2">    Reject</span>
                             </Button>
                           </div>
                         </div>

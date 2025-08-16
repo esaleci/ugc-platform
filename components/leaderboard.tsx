@@ -269,7 +269,7 @@ export function Leaderboard() {
   }
 
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <div className="flex-1 space-y-6 p-0 md:p-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Leaderboard</h2>
         <p className="text-muted-foreground">Top performing creators across different metrics</p>
@@ -285,15 +285,15 @@ export function Leaderboard() {
         <TabsContent value="earnings" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Top 3 Podium */}
-            <Card className="md:col-span-2 lg:col-span-3">
-              <CardHeader>
+            <Card className="md:col-span-2 lg:col-span-3 border-none bg-transparent xl:border xl:bg-card text-card-foreground">
+              <CardHeader className="p-0 xl:p-6">
                 <CardTitle className="flex items-center gap-2">
                   <Trophy className="h-5 w-5 text-yellow-500" />
                   Top Earners This Month
                 </CardTitle>
                 <CardDescription>Creators with the highest earnings</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0 pt-4 xl:p-6">
                 <div className="grid gap-4 md:grid-cols-3">
                   {topEarners.slice(0, 3).map((creator, index) => (
                     <Card key={creator.id} className={`${index === 0 ? "ring-2 ring-yellow-500" : ""}`}>
@@ -330,12 +330,12 @@ export function Leaderboard() {
             </Card>
 
             {/* Full Rankings */}
-            <Card className="md:col-span-2 lg:col-span-3">
-              <CardHeader>
+            <Card className="md:col-span-2 lg:col-span-3 border-none bg-transparent xl:border xl:bg-card text-card-foreground">
+              <CardHeader className="p-0 pt-4 xl:p-6">
                 <CardTitle>Complete Rankings</CardTitle>
                 <CardDescription>All creators ranked by earnings</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0 pt-4 xl:p-6">
                 <div className="space-y-4">
                   {topEarners.map((creator) => (
                     <div key={creator.id} className="flex items-center space-x-4 p-4 rounded-lg border">
@@ -412,15 +412,15 @@ export function Leaderboard() {
         <TabsContent value="growth" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* Top 3 Fastest Growing */}
-            <Card className="md:col-span-2 lg:col-span-3">
-              <CardHeader>
+            <Card className="md:col-span-2 lg:col-span-3 border-none bg-transparent xl:border xl:bg-card text-card-foreground">
+              <CardHeader className="p-0 xl:p-6">
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-lime-300" />
                   Fastest Growing Creators This Month
                 </CardTitle>
                 <CardDescription>Creators with the highest follower and engagement growth rates</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-0 pt-6 xl:p-6">
                 <div className="grid gap-4 md:grid-cols-3">
                   {fastestGrowing.slice(0, 3).map((creator, index) => (
                     <Card key={creator.id} className={`${index === 0 ? "ring-2 ring-lime-300" : ""}`}>
@@ -573,7 +573,7 @@ export function Leaderboard() {
               <CardContent>
                 <div className="space-y-4">
                   {fastestGrowing.map((creator, index) => (
-                    <div key={creator.id} className="flex items-center space-x-4 p-4 rounded-lg border">
+                    <div key={creator.id} className="flex items-center space-x-4 p-4 rounded-lg border flex-wrap gap-3">
                       <div className="flex items-center justify-center w-8 h-8">
                         {index < 3 ? (
                           index === 0 ? (
@@ -599,15 +599,19 @@ export function Leaderboard() {
                       <div className="flex-1">
                         <div className="font-medium">{creator.name}</div>
                         <div className="text-sm text-muted-foreground">
-                          {creator.currentFollowers.toLocaleString()} followers • {creator.username}
+                        {creator.currentFollowers.toLocaleString()} followers
                         </div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-center flex gap-3 justify-between items-start w-full">
+                      <div className="text-sm text-muted-foreground">
+                           {creator.username}
+                        </div>
                         <Badge className={getTierColor(creator.tier)} variant="outline">
                           {creator.tier}
                         </Badge>
                       </div>
-                      <div className="text-center">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 w-full items-center">
+                      <div className="text-start lg:text-center">
                         <div className="text-sm text-muted-foreground">Followers</div>
                         <div className="font-semibold text-lime-300">+{creator.followerGrowth}%</div>
                       </div>
@@ -615,13 +619,14 @@ export function Leaderboard() {
                         <div className="text-sm text-muted-foreground">Engagement</div>
                         <div className="font-semibold text-pink-300">+{creator.engagementGrowth}%</div>
                       </div>
-                      <div className="text-center">
+                      <div className="text-start lg:text-center">
                         <div className="text-sm text-muted-foreground">Content</div>
                         <div className="font-semibold text-purple-500">+{creator.contentGrowth}%</div>
                       </div>
-                      <div className="text-right">
+                      <div className="text-center lg:text-right">
                         <div className="text-sm text-muted-foreground">Growth Score</div>
                         <div className="font-semibold">{creator.growthScore}</div>
+                      </div>
                       </div>
                     </div>
                   ))}
